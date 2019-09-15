@@ -12,16 +12,16 @@ def prompt_yn(email, issue_count):
         exit(1)
 
 
-def get_name():
+def git_email():
     return subprocess.check_output(
         ["git", "config", "user.email"], encoding="UTF-8"
     ).split("@")[0]
 
 
-def get_issues(git_email):
+def search_issues(jql):
     return jira_requests.get(
         "/rest/api/2/search",
-        params={"jql": f'assignee = {git_email} AND status = "Ready for Stage"'},
+        params={"jql": jql},
     ).json()["issues"]
 
 
@@ -36,8 +36,8 @@ def set_issues(issue_ids_or_keys):
         print(f"issue: {issue_id_or_key}", response)
 
 
-GIT_EMAIL = get_name()
-ISSUES = get_issues(GIT_EMAIL)
+GIT_EMAIL = git_email()
+ISSUES = search_issues(f'assignee = {GIT_EMAIL} AND status = "Ready for Stage"')
 
 ISSUE_COUNT = len(ISSUES)
 ISSUE_KEYS = [issue["key"] for issue in ISSUES]
