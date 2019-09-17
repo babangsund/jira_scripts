@@ -10,7 +10,7 @@ JIRA_URL = os.environ["JIRA_URL"]
 JIRA_AUTH = HTTPBasicAuth(USERNAME, PASSWORD)
 
 
-def __jira_request__(url, **kwargs):
+def _jira_request(url, **kwargs):
     return requests.request(
         auth=JIRA_AUTH,
         url=JIRA_URL + url,
@@ -19,16 +19,16 @@ def __jira_request__(url, **kwargs):
 
 
 def get(url, **kwargs):
-    return __jira_request__(url, method="GET", **kwargs)
+    return _jira_request(url, method="GET", **kwargs)
 
 
 def post(url, **kwargs):
-    return __jira_request__(url, method="POST", **kwargs)
+    return _jira_request(url, method="POST", **kwargs)
 
 
 def put(url, **kwargs):
-    return __jira_request__(url, method="PUT", **kwargs)
+    return _jira_request(url, method="PUT", **kwargs)
 
 
 def delete(url, **kwargs):
-    return __jira_request__(url, method="DELETE", **kwargs)
+    return _jira_request(url, method="DELETE", **kwargs)
