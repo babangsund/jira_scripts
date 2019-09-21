@@ -68,4 +68,4 @@ exit_prompt "Transition JIRA issue $jira_issue to Ready for Stage?"
 curl -u $jira_user \
      -H "Content-Type: application/json" \
      -d '{"transition":{"id":101}}' \
-     -XPOST "$jira_base_url/rest/api/2/issue/$jira_issue/transitions"
+     -XPOST $jira_base_url/rest/api/2/issue/$jira_issue/transitions
