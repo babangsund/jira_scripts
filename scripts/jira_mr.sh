@@ -1,11 +1,12 @@
 #!/bin/bash
 set -e
 
-branch=$1
-jira_user=$2
-jira_base_url=$3
+jira_url=JIRA_BASE_URL
+jira_user="JIRA_USER:JIRA_PASSWORD"
 
 n=$'\n'
+
+branch=$1
 jira_issue=$(echo $1 | sed 's/.*\///g')
 
 exit_prompt() {
@@ -65,7 +66,8 @@ git push \
 echo $n$n
 
 exit_prompt "Transition JIRA issue $jira_issue to Ready for Stage?"
-curl -u $jira_user \
-     -H "Content-Type: application/json" \
-     -d '{"transition":{"id":101}}' \
-     -XPOST $jira_base_url/rest/api/2/issue/$jira_issue/transitions
+curl --request POST \
+  --user $jira_auth \
+  --url $jira_url/rest/api/2/issue/$issue/transitions \
+  --header "Content-Type: application/json" \
+  --data '{"transition":{"id":101}}'
