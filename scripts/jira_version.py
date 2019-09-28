@@ -1,6 +1,6 @@
 import os
-import json
 import re
+import json
 import subprocess
 import jira_requests
 
